@@ -4,7 +4,9 @@ import com.ssau.exceptions.ModelPriceOutOfBoundsException;
 import com.ssau.exceptions.NoSuchModelNameException;
 import com.ssau.exceptions.DuplicateModelNameException;
 
-public class Motorcycle implements Vehicle {
+import java.io.Serializable;
+
+public class Motorcycle implements Vehicle, Serializable {
     //поле типа String, хранящее марку мотоцикла
     private String manufacturer;
     private Model head;
@@ -15,6 +17,10 @@ public class Motorcycle implements Vehicle {
         head = new Model();
         head.next = head;
         head.prev = head;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     //метод для получения марки мотоцикла
@@ -57,7 +63,7 @@ public class Motorcycle implements Vehicle {
 
     //внутренний класс Модель, имеющий поля название модели и её цену,
     // а также конструктор
-    private class Model {
+    private class Model implements Serializable {
         private String modelName;
         private double modelPrice;
         private Model prev;

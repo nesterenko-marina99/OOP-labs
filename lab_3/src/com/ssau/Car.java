@@ -4,9 +4,10 @@ import com.ssau.exceptions.DuplicateModelNameException;
 import com.ssau.exceptions.ModelPriceOutOfBoundsException;
 import com.ssau.exceptions.NoSuchModelNameException;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Car implements Vehicle {
+public class Car implements Vehicle, Serializable {
     //поле типа String, хранящее марку автомобиля
     private String manufacturer;
     private Model[] modelsArray;
@@ -18,6 +19,9 @@ public class Car implements Vehicle {
 
     public Car(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public Car() {
     }
 
     //метод для поиска
@@ -43,7 +47,7 @@ public class Car implements Vehicle {
 
     //внутренний класс Модель, имеющий поля название модели и её цену,
     // а также конструктор (класс Автомобиль хранит массив Моделей)
-    private class Model {
+    private class Model implements Serializable {
         private String modelName;
         private double modelPrice;
 
