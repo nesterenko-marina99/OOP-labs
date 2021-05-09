@@ -6,6 +6,7 @@ import com.ssau.exceptions.NoSuchModelNameException;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Car implements Vehicle, Serializable {
     //поле типа String, хранящее марку автомобиля
@@ -177,5 +178,20 @@ public class Car implements Vehicle, Serializable {
                 sb.append(model.modelName).append(" ").append(model.modelPrice).append('\'');
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return manufacturer.equals(car.manufacturer) && Arrays.equals(modelsArray, car.modelsArray);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(manufacturer);
+        result = 31 * result + Arrays.hashCode(modelsArray);
+        return result;
     }
 }
