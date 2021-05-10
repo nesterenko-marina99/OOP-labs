@@ -37,18 +37,18 @@ public class IOStaticMethods {
     }
 
     //метод записи информации о транспортном средстве в байтовый поток
-    public static void writingVehicleInfToByteStream(Vehicle vehicle, OutputStream out) {
+    public static void outputVehicle(Vehicle vehicle, OutputStream out) {
         String[] modelNames = vehicle.getArrayOfNames();
         double[] prices = vehicle.getArrayOfPrices();
         int size = vehicle.getSize();
         //конструкция try-with-resources
         try (DataOutputStream dos = new DataOutputStream(out)) {
             // записываем значения
-            IOStaticMethods.writeStringToByteStream(dos, vehicle.getManufacturer());
+            IOStaticMethods.outputString(dos, vehicle.getManufacturer());
             dos.writeInt(size);
             int i = 0;
             while (i < size) {
-                IOStaticMethods.writeStringToByteStream(dos, modelNames[i]);
+                IOStaticMethods.outputString(dos, modelNames[i]);
                 dos.writeDouble(prices[i]);
                 i++;
             }
@@ -57,14 +57,14 @@ public class IOStaticMethods {
         }
     }
 
-    private static void writeStringToByteStream(DataOutputStream dos, String message)
+    private static void outputString(DataOutputStream dos, String message)
             throws IOException {
         byte[] byteMessage = message.getBytes(StandardCharsets.UTF_8);
         dos.writeInt(byteMessage.length);
         dos.write(byteMessage, 0, byteMessage.length);
     }
 
-    private static String readStringFromByteStream(DataInputStream dis) throws IOException {
+    private static String inputString(DataInputStream dis) throws IOException {
         int messageLength = dis.readInt();
         byte[] message = new byte[messageLength];
         if (dis.read(message, 0, messageLength) == -1)
@@ -72,16 +72,16 @@ public class IOStaticMethods {
         return new String(message);
     }
 
-    //метод чтения информации о транспортном средстве из байтового потока
-    public static Car readingCarInfFromByteStream(InputStream in) {
+    //метод чтения информации о автомобиле из байтового потока
+    public static Car inputCar(InputStream in) {
         // обратное считывание из файлa
         try (DataInputStream dis = new DataInputStream(in)) {
             // записываем значения
-            Car car = new Car(IOStaticMethods.readStringFromByteStream(dis),
+            Car car = new Car(IOStaticMethods.inputString(dis),
                     dis.readInt());
             int i = 0;
             while (i < car.getSize()) {
-                car.addModel(IOStaticMethods.readStringFromByteStream(dis),
+                car.addModel(IOStaticMethods.inputString(dis),
                         dis.readDouble());
                 i++;
             }
@@ -92,13 +92,14 @@ public class IOStaticMethods {
         }
     }
 
-    public static Motorcycle readingMotorcycleInfFromByteStream(InputStream in) {
+    //метод чтения информации о Мотоцикле из байтового потока
+    public static Motorcycle inputMotorcycle(InputStream in) {
         try (DataInputStream dis = new DataInputStream(in)) {
-            Motorcycle motorcycle = new Motorcycle(IOStaticMethods.readStringFromByteStream(dis));
+            Motorcycle motorcycle = new Motorcycle(IOStaticMethods.inputString(dis));
             int size = dis.readInt();
             int i = 0;
             while (i < size) {
-                motorcycle.addModel(IOStaticMethods.readStringFromByteStream(dis), dis.readDouble());
+                motorcycle.addModel(IOStaticMethods.inputString(dis), dis.readDouble());
                 i++;
             }
             return motorcycle;
@@ -108,7 +109,8 @@ public class IOStaticMethods {
         }
     }
 
-    public static void writingVehicleInfToSymbolStream(Vehicle vehicle, Writer out) {
+    //метод записи информации о транспортном средстве в символьный поток
+    public static void writeVehicle(Vehicle vehicle, Writer out) {
         PrintWriter pwout = new PrintWriter(out);
         int size = vehicle.getSize();
         String[] modelNames = vehicle.getArrayOfNames();
@@ -121,7 +123,8 @@ public class IOStaticMethods {
         pwout.close();
     }
 
-    public static Car readingCarInfFromSymbolStream(Reader in) {
+    //метод чтения информации о автомобиле из символьного потока
+    public static Car readCar(Reader in) {
         try {
             BufferedReader reader = new BufferedReader(in);
             String[] line = reader.readLine().split(" , ");
@@ -141,7 +144,8 @@ public class IOStaticMethods {
 
     }
 
-    public static Motorcycle readingMotorcycleInfFromSymbolStream(Reader in) {
+    //метод чтения информации о мотоцикле из символьного потока
+    public static Motorcycle readMotorcycle(Reader in) {
         try {
             BufferedReader reader = new BufferedReader(in);
             String[] line = reader.readLine().split(" , ");

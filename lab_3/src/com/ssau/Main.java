@@ -25,9 +25,9 @@ public class Main {
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
 
-        IOStaticMethods.writingVehicleInfToSymbolStream(yamaha, new FileWriter("input.txt"));
-        IOStaticMethods.writingVehicleInfToSymbolStream(IOStaticMethods.
-                        readingMotorcycleInfFromSymbolStream(new FileReader("input.txt")),
+        IOStaticMethods.writeVehicle(yamaha, new FileWriter("input.txt"));
+        IOStaticMethods.writeVehicle(IOStaticMethods.
+                        readMotorcycle(new FileReader("input.txt")),
                 new FileWriter("output.txt"));
         FileOutputStream fileOut = new FileOutputStream ("output");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
