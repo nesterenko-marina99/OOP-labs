@@ -33,5 +33,23 @@ public class Main {
         yamaha.modifyPriceByName("MT-10", 1_400_000);
         System.out.println("Modified price MT-10: " + yamaha.getPriceByName("MT-10"));
         ClassWithStaticMethods.printVehicle(yamaha);
+
+        Car lada = new Car("Lada", 7);
+        lada.addModel("Granta седан", 504900);
+        lada.addModel("Granta лифтбек", 526900);
+        lada.addModel("Granta хэтчбек", 550500);
+        lada.addModel("Granta универсал", 533900);
+        lada.addModel("Granta Cross", 625900);
+        lada.addModel("Granta учебная", 547900);
+        lada.addModel("Granta Drive Active", 694900);
+        System.out.println(lada.getManufacturer());
+        ClassWithStaticMethods.printVehicle(lada);
+        System.out.println("Price Granta лифтбек: " + lada.getPriceByName("Granta лифтбек"));
+        lada.modifyName("Granta лифтбек", "Granta liftback");
+        ClassWithStaticMethods.printModelNames(lada);
+        lada.modifyPriceByName("Granta универсал", 534000);
+        ClassWithStaticMethods.printVehicle(lada);
+        lada.removeModel("Granta учебная");
+        ClassWithStaticMethods.printVehicle(lada);
     }
 }
