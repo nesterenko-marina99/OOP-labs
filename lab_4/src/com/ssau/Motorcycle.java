@@ -5,6 +5,8 @@ import com.ssau.exceptions.ModelPriceOutOfBoundsException;
 import com.ssau.exceptions.NoSuchModelNameException;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Motorcycle implements Vehicle, Serializable {
     //поле типа String, хранящее марку мотоцикла
@@ -201,5 +203,40 @@ public class Motorcycle implements Vehicle, Serializable {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        //if (o == null || getClass() != o.getClass()) return false;
+        //Car car = (Car) o;
+        //return manufacturer.equals(car.manufacturer) && Arrays.equals(modelsArray, car.modelsArray);
+        if (o instanceof Vehicle) {
+            Vehicle v = (Vehicle) o;
+            //int curSize = getSize();
+            int comparedSize = v.getSize();
+            if (comparedSize == getSize())
+                if (v.getManufacturer().equals(manufacturer)) {
+                    String[] currentNames = getArrayOfNames();
+                    Arrays.sort(currentNames);
+                    double[] currentPrices = getArrayOfPrices();
+                    Arrays.sort(currentPrices);
+                    String[] comparedNames = v.getArrayOfNames();
+                    Arrays.sort(comparedNames);
+                    double[] comparedPrices = v.getArrayOfPrices();
+                    Arrays.sort(comparedPrices);
+                    int i = 0;
+                    while (i < comparedSize && currentNames[i].equals(comparedNames[i]) &&
+                            (Double.compare(currentPrices[i], comparedPrices[i]) == 0))
+                        i++;
+                    return i == comparedSize;
+                }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(manufacturer, head, size);
     }
 }
