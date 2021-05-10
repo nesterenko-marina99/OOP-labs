@@ -16,16 +16,6 @@ public class Car implements Vehicle {
         modelsArray = new Model[sizeArrayModels];
     }
 
-    //метод для поиска
-    private Model findModelByName(String modelName) {
-        int i = 0;
-        while (i < modelsArray.length &&
-                !modelsArray[i].modelName.equals(modelName))
-            i++;
-        if (i == modelsArray.length) return null;
-        else return modelsArray[i];
-    }
-
 
     //метод для получения марки автомобиля
     public String getManufacturer() {
@@ -48,6 +38,16 @@ public class Car implements Vehicle {
             this.modelPrice = modelPrice;
         }
 
+    }
+
+    //метод для поиска
+    private Model findModelByName(String modelName) {
+        int i = 0;
+        while (i < modelsArray.length &&
+                !modelsArray[i].modelName.equals(modelName))
+            i++;
+        if (i == modelsArray.length) return null;
+        else return modelsArray[i];
     }
 
     //метод, возвращающий массив названий всех моделей
