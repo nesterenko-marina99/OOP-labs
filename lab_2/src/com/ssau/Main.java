@@ -26,8 +26,12 @@ public class Main {
         //yamaha.modifyName("YZ450F", "WR250F");
 
         yamaha.modifyName("YZF-R3", "YZF-R4");
-        yamaha.removeModel("YZF-R6");
-        System.out.println(yamaha.getPriceByName("MT-10"));
         ClassWithStaticMethods.printModelNames(yamaha);
+        yamaha.removeModel("YZF-R6");
+        ClassWithStaticMethods.printVehicle(yamaha);
+        System.out.println("Price MT-10: " + yamaha.getPriceByName("MT-10"));
+        yamaha.modifyPriceByName("MT-10", 1_400_000);
+        System.out.println("Modified price MT-10: " + yamaha.getPriceByName("MT-10"));
+        ClassWithStaticMethods.printVehicle(yamaha);
     }
 }
