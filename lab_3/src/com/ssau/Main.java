@@ -25,22 +25,17 @@ public class Main {
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
 
-        ClassWithStaticMethods.writingVehicleInfToSymbolStream(yamaha, new FileWriter
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt"));
-        ClassWithStaticMethods.writingVehicleInfToSymbolStream(
-                ClassWithStaticMethods.readingMotorcycleInfFromSymbolStream(new FileReader
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt")),
-                new FileWriter
-                        ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output.txt"));
-        FileOutputStream fileOut = new FileOutputStream
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output");
+        IOStaticMethods.writingVehicleInfToSymbolStream(yamaha, new FileWriter("input.txt"));
+        IOStaticMethods.writingVehicleInfToSymbolStream(IOStaticMethods.
+                        readingMotorcycleInfFromSymbolStream(new FileReader("input.txt")),
+                new FileWriter("output.txt"));
+        FileOutputStream fileOut = new FileOutputStream ("output");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(yamaha);
-        FileInputStream fileIn = new FileInputStream
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output");
+        FileInputStream fileIn = new FileInputStream("output");
         ObjectInputStream in = new ObjectInputStream(fileIn);
         Motorcycle yamaha_2= (Motorcycle) in.readObject();
-        ClassWithStaticMethods.printModelNames(yamaha_2);
+        IOStaticMethods.printVehicle(yamaha_2);
 
         Car lada = new Car("Lada", 7);
         lada.addModel("Granta седан", 504900);

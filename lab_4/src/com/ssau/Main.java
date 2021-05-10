@@ -29,10 +29,10 @@ public class Main {
         //yamaha.modifyName("MT-09", "XSR900");
         //yamaha.modifyName("YZ450F", "WR250F");
 
-        ClassWithStaticMethods.writingVehicleInfToSymbolStream(yamaha, new FileWriter
+        IOStaticMethods.writingVehicleInfToSymbolStream(yamaha, new FileWriter
                 ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt"));
-        ClassWithStaticMethods.writingVehicleInfToSymbolStream(
-                ClassWithStaticMethods.readingMotorcycleInfFromSymbolStream(new FileReader
+        IOStaticMethods.writingVehicleInfToSymbolStream(
+                IOStaticMethods.readingMotorcycleInfFromSymbolStream(new FileReader
                 ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt")),
                 new FileWriter
                         ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output.txt"));
