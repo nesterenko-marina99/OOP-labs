@@ -25,13 +25,11 @@ public class IOStaticMethods {
         for (double price : prices) System.out.println(price);
     }
 
-    public static void printVehicle (Vehicle vehicle)
-    {
+    public static void printVehicle(Vehicle vehicle) {
         String[] modelNames = vehicle.getArrayOfNames();
-        double[] prices= vehicle.getArrayOfPrices();
+        double[] prices = vehicle.getArrayOfPrices();
         System.out.println(vehicle.getManufacturer() + '\'');
-        for (int i = 0; i < vehicle.getSize(); i++)
-        {
+        for (int i = 0; i < vehicle.getSize(); i++) {
             System.out.println(modelNames[i] + ' ' + prices[i] + '\'');
         }
     }
@@ -73,40 +71,35 @@ public class IOStaticMethods {
     }
 
     //метод чтения информации о автомобиле из байтового потока
-    public static Car inputCar(InputStream in) {
+    public static Car inputCar(InputStream in) throws IOException,
+            DuplicateModelNameException {
         // обратное считывание из файлa
-        try (DataInputStream dis = new DataInputStream(in)) {
-            // записываем значения
-            Car car = new Car(IOStaticMethods.inputString(dis),
-                    dis.readInt());
-            int i = 0;
-            while (i < car.getSize()) {
-                car.addModel(IOStaticMethods.inputString(dis),
-                        dis.readDouble());
-                i++;
-            }
-            return car;
-        } catch (IOException | DuplicateModelNameException ex) {
-            System.out.println(ex.getMessage());
-            return null;
+        DataInputStream dis = new DataInputStream(in);
+        // записываем значения
+        Car car = new Car(IOStaticMethods.inputString(dis),
+                dis.readInt());
+        int i = 0;
+        while (i < car.getSize()) {
+            car.addModel(IOStaticMethods.inputString(dis),
+                    dis.readDouble());
+            i++;
         }
+        return car;
+
     }
 
     //метод чтения информации о Мотоцикле из байтового потока
-    public static Motorcycle inputMotorcycle(InputStream in) {
-        try (DataInputStream dis = new DataInputStream(in)) {
-            Motorcycle motorcycle = new Motorcycle(IOStaticMethods.inputString(dis));
-            int size = dis.readInt();
-            int i = 0;
-            while (i < size) {
-                motorcycle.addModel(IOStaticMethods.inputString(dis), dis.readDouble());
-                i++;
-            }
-            return motorcycle;
-        } catch (IOException | DuplicateModelNameException | NoSuchModelNameException ex) {
-            System.out.println(ex.getMessage());
-            return null;
+    public static Motorcycle inputMotorcycle(InputStream in) throws IOException,
+            DuplicateModelNameException, NoSuchModelNameException {
+        DataInputStream dis = new DataInputStream(in);
+        Motorcycle motorcycle = new Motorcycle(IOStaticMethods.inputString(dis));
+        int size = dis.readInt();
+        int i = 0;
+        while (i < size) {
+            motorcycle.addModel(IOStaticMethods.inputString(dis), dis.readDouble());
+            i++;
         }
+        return motorcycle;
     }
 
     //метод записи информации о транспортном средстве в символьный поток
@@ -124,43 +117,33 @@ public class IOStaticMethods {
     }
 
     //метод чтения информации о автомобиле из символьного потока
-    public static Car readCar(Reader in) {
-        try {
-            BufferedReader reader = new BufferedReader(in);
-            String[] line = reader.readLine().split(" , ");
-            int size = Integer.parseInt(line[1]);
-            Car car = new Car(line[0], size);
-            for (int i = 0; i < size; i++) {
-                line = reader.readLine().split(" , ");
-                car.addModel(line[0], Double.parseDouble(line[1]));
-            }
-            reader.close();
-            return car;
-        } catch (IOException | DuplicateModelNameException e) {
-            System.out.println(e.getMessage());
-            return null;
+    public static Car readCar(Reader in) throws IOException,
+            DuplicateModelNameException {
+        BufferedReader reader = new BufferedReader(in);
+        String[] line = reader.readLine().split(" , ");
+        int size = Integer.parseInt(line[1]);
+        Car car = new Car(line[0], size);
+        for (int i = 0; i < size; i++) {
+            line = reader.readLine().split(" , ");
+            car.addModel(line[0], Double.parseDouble(line[1]));
         }
-
-
+        reader.close();
+        return car;
     }
 
     //метод чтения информации о мотоцикле из символьного потока
-    public static Motorcycle readMotorcycle(Reader in) {
-        try {
-            BufferedReader reader = new BufferedReader(in);
-            String[] line = reader.readLine().split(" , ");
-            int size = Integer.parseInt(line[1]);
-            Motorcycle motorcycle = new Motorcycle(line[0]);
-            for (int i = 0; i < size; i++) {
-                line = reader.readLine().split(" , ");
-                motorcycle.addModel(line[0], Double.parseDouble(line[1]));
-            }
-            reader.close();
-            return motorcycle;
-        } catch (IOException | DuplicateModelNameException | NoSuchModelNameException e) {
-            System.out.println(e.getMessage());
-            return null;
+    public static Motorcycle readMotorcycle(Reader in) throws IOException,
+            DuplicateModelNameException, NoSuchModelNameException {
+        BufferedReader reader = new BufferedReader(in);
+        String[] line = reader.readLine().split(" , ");
+        int size = Integer.parseInt(line[1]);
+        Motorcycle motorcycle = new Motorcycle(line[0]);
+        for (int i = 0; i < size; i++) {
+            line = reader.readLine().split(" , ");
+            motorcycle.addModel(line[0], Double.parseDouble(line[1]));
         }
+        reader.close();
+        return motorcycle;
     }
 
 }

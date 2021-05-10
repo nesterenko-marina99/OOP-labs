@@ -11,7 +11,7 @@ public class Main {
             NoSuchModelNameException, IOException, ClassNotFoundException {
 
 
-       // write your code here
+        // write your code here
         Motorcycle yamaha = new Motorcycle("Yamaha");
         yamaha.addModel("YZF-R1", 1705000);
         yamaha.addModel("YZF-R6", 1153000);
@@ -26,15 +26,16 @@ public class Main {
         yamaha.addModel("WR450F", 818000);
 
         IOStaticMethods.writeVehicle(yamaha, new FileWriter("input.txt"));
-        IOStaticMethods.writeVehicle(IOStaticMethods.
-                        readMotorcycle(new FileReader("input.txt")),
-                new FileWriter("output.txt"));
-        FileOutputStream fileOut = new FileOutputStream ("output");
+        IOStaticMethods.writeVehicle(IOStaticMethods.readMotorcycle
+                (new FileReader("input.txt")), new FileWriter("output.txt"));
+        //сериализация
+        FileOutputStream fileOut = new FileOutputStream("output");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(yamaha);
+        //десериализация
         FileInputStream fileIn = new FileInputStream("output");
         ObjectInputStream in = new ObjectInputStream(fileIn);
-        Motorcycle yamaha_2= (Motorcycle) in.readObject();
+        Motorcycle yamaha_2 = (Motorcycle) in.readObject();
         IOStaticMethods.printVehicle(yamaha_2);
 
         Car lada = new Car("Lada", 7);
