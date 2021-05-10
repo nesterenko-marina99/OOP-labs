@@ -28,9 +28,10 @@ public class Car implements Vehicle, Serializable {
     private Model findModelByName(String modelName) {
         int i = 0;
         while (i < modelsArray.length &&
+                !(modelsArray[i] == null) &&
                 !modelsArray[i].modelName.equals(modelName))
             i++;
-        if (i == modelsArray.length) return null;
+        if (i == modelsArray.length || modelsArray[i] == null) return null;
         else return modelsArray[i];
     }
 
@@ -110,23 +111,21 @@ public class Car implements Vehicle, Serializable {
     // массива Моделей), использовать метод Arrays.copyOf()
     public void addModel(String carModel, double carPrice) throws
             DuplicateModelNameException {
-
-            if (findModelByName(carModel) != null) throw new
-                    DuplicateModelNameException(carModel);
+        if (findModelByName(carModel) != null) throw new
+                DuplicateModelNameException(carModel);
+        else {
+            if (carPrice < 0) throw new ModelPriceOutOfBoundsException();
             else {
-                if (carPrice < 0) throw new ModelPriceOutOfBoundsException();
-                else {
-                    int i = 0;
-                    while (i < modelsArray.length && modelsArray[i] != null)
-                        i++;
-                    Model newModel = new Model(carModel, carPrice);
-                    if (i == modelsArray.length) {
-                        modelsArray = Arrays.copyOf(modelsArray, modelsArray.length + 1);
-                        modelsArray[modelsArray.length - 1] = newModel;
-                    } else modelsArray[i] = newModel;
-                }
+                int i = 0;
+                while (i < modelsArray.length && modelsArray[i] != null)
+                    i++;
+                Model newModel = new Model(carModel, carPrice);
+                if (i == modelsArray.length) {
+                    modelsArray = Arrays.copyOf(modelsArray, modelsArray.length + 1);
+                    modelsArray[modelsArray.length - 1] = newModel;
+                } else modelsArray[i] = newModel;
             }
-
+        }
     }
 
     //метод удаления модели с заданным именем и её цены, использовать

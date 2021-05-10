@@ -44,9 +44,10 @@ public class Car implements Vehicle {
     private Model findModelByName(String modelName) {
         int i = 0;
         while (i < modelsArray.length &&
+                !(modelsArray[i] == null) &&
                 !modelsArray[i].modelName.equals(modelName))
             i++;
-        if (i == modelsArray.length) return null;
+        if (i == modelsArray.length || modelsArray[i] == null) return null;
         else return modelsArray[i];
     }
 
@@ -118,6 +119,7 @@ public class Car implements Vehicle {
             }
         }
     }
+
 
     //метод удаления модели с заданным именем и её цены, использовать
     // методы System.arraycopy, Arrays.copyOf()

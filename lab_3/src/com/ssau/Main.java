@@ -13,7 +13,6 @@ public class Main {
 
        // write your code here
         Motorcycle yamaha = new Motorcycle("Yamaha");
-        //yamaha.addModel();
         yamaha.addModel("YZF-R1", 1705000);
         yamaha.addModel("YZF-R6", 1153000);
         yamaha.addModel("YZF-R3", 499000);
@@ -25,9 +24,6 @@ public class Main {
         yamaha.addModel("MT-03", 473000);
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
-        //проверка на выбрасывание исключений
-        //yamaha.modifyName("MT-09", "XSR900");
-        //yamaha.modifyName("YZ450F", "WR250F");
 
         ClassWithStaticMethods.writingVehicleInfToSymbolStream(yamaha, new FileWriter
                 ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt"));
@@ -45,9 +41,14 @@ public class Main {
         ObjectInputStream in = new ObjectInputStream(fileIn);
         Motorcycle yamaha_2= (Motorcycle) in.readObject();
         ClassWithStaticMethods.printModelNames(yamaha_2);
-        /*yamaha.modifyName("YZF-R3", "YZF-R4");
-        yamaha.removeModel("YZF-R6");
-        System.out.println(yamaha.getPriceByName("MT-10"));
-        ClassWithStaticMethods.printModelNames(yamaha);*/
+
+        Car lada = new Car("Lada", 7);
+        lada.addModel("Granta седан", 504900);
+        lada.addModel("Granta лифтбек", 526900);
+        lada.addModel("Granta хэтчбек", 550500);
+        lada.addModel("Granta универсал", 533900);
+        lada.addModel("Granta Cross", 625900);
+        lada.addModel("Granta учебная", 547900);
+        lada.addModel("Granta Drive Active", 694900);
     }
 }

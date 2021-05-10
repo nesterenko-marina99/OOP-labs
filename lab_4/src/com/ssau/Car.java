@@ -30,9 +30,10 @@ public class Car implements Vehicle, Serializable, Cloneable {
     private Model findModelByName(String modelName) {
         int i = 0;
         while (i < modelsArray.length &&
+                !(modelsArray[i] == null) &&
                 !modelsArray[i].modelName.equals(modelName))
             i++;
-        if (i == modelsArray.length) return null;
+        if (i == modelsArray.length || modelsArray[i] == null) return null;
         else return modelsArray[i];
     }
 
@@ -116,7 +117,6 @@ public class Car implements Vehicle, Serializable, Cloneable {
     // массива Моделей), использовать метод Arrays.copyOf()
     public void addModel(String carModel, double carPrice) throws
             DuplicateModelNameException {
-
         if (findModelByName(carModel) != null) throw new
                 DuplicateModelNameException(carModel);
         else {
@@ -132,7 +132,6 @@ public class Car implements Vehicle, Serializable, Cloneable {
                 } else modelsArray[i] = newModel;
             }
         }
-
     }
 
     //метод удаления модели с заданным именем и её цены, использовать

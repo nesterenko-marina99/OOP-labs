@@ -48,8 +48,7 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     }
 
     private Model findModelByName(String modelName) throws NoSuchModelNameException {
-        if (isEmptyList()) throw new
-                NoSuchModelNameException(modelName);
+        if (isEmptyList()) return null;
         else {
             Model pn = head.next;
             Model pp = head.prev;
@@ -159,15 +158,9 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     //метод добавления названия модели и её цены
     public void addModel(String mcModel, double mcPrice) throws
             DuplicateModelNameException, NoSuchModelNameException {
-        if (isEmptyList()) createNewModel(mcModel, mcPrice);
-        else if (findModelByName(mcModel) != null) throw new
+        if (findModelByName(mcModel) != null) throw new
                 DuplicateModelNameException(mcModel);
-        else createNewModel(mcModel, mcPrice);
-    }
-
-    //добавление в начало списка
-    private void createNewModel(String mcModel, double mcPrice) {
-        if (mcPrice < 0) throw new ModelPriceOutOfBoundsException();
+        else if (mcPrice < 0) throw new ModelPriceOutOfBoundsException();
         else {
             Model p = head;
             Model newModel = new Model(mcModel, mcPrice, p, p.next);
