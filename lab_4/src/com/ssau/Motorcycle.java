@@ -189,14 +189,14 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Мотоцикл");
-        sb.append("Производитель: ").append(manufacturer).append('\'');
+        sb.append("Производитель: ").append(manufacturer).append("\n");
         sb.append("Модельный ряд: ");
         if (isEmptyList()) sb.append("пусто");
         else {
-            sb.append('\'');
+            sb.append("\n");
             Model p = head.next;
             while (p != head) {
-                sb.append(p.modelName).append(" ").append(p.modelPrice).append('\'');
+                sb.append(p.modelName).append(" ").append(p.modelPrice).append("\n");
                 p = p.next;
             }
         }

@@ -173,13 +173,17 @@ public class Car implements Vehicle, Serializable, Cloneable {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Автомобиль");
-        sb.append("Производитель: ").append(manufacturer).append('\'');
+        sb.append("Производитель: ").append(manufacturer).append("\n");
         sb.append("Модельный ряд: ");
         if (modelsArray == null) sb.append("пусто");
         else {
-            sb.append('\'');
-            for (Model model : modelsArray)
-                sb.append(model.modelName).append(" ").append(model.modelPrice).append('\'');
+            sb.append("\n");
+            int i = 0;
+            while (modelsArray[i] != null && i < this.getSize()) {
+                sb.append(modelsArray[i].modelName).append(" ").
+                        append(modelsArray[i].modelPrice).append("\n");
+                i++;
+            }
         }
         return sb.toString();
     }
