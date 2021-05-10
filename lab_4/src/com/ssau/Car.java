@@ -8,10 +8,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Car implements Vehicle, Serializable {
+public class Car implements Vehicle, Serializable, Cloneable {
     //поле типа String, хранящее марку автомобиля
     private String manufacturer;
     private Model[] modelsArray;
+    //private int size;
 
     public Car(String Manufacturer, int sizeArrayModels) {
         this.manufacturer = Manufacturer;
@@ -48,7 +49,7 @@ public class Car implements Vehicle, Serializable {
 
     //внутренний класс Модель, имеющий поля название модели и её цену,
     // а также конструктор (класс Автомобиль хранит массив Моделей)
-    private class Model implements Serializable {
+    private class Model implements Serializable, Cloneable {
         private String modelName;
         private double modelPrice;
 
@@ -57,6 +58,10 @@ public class Car implements Vehicle, Serializable {
             this.modelPrice = modelPrice;
         }
 
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
     }
 
     //метод, возвращающий массив названий всех моделей
@@ -215,5 +220,16 @@ public class Car implements Vehicle, Serializable {
         int result = Objects.hash(manufacturer);
         result = 31 * result + Arrays.hashCode(modelsArray);
         return result;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Car vehicleClone = null;
+        vehicleClone = (Car) super.clone();
+        vehicleClone.modelsArray = modelsArray.clone();
+        vehicleClone.manufacturer = getManufacturer();
+        //vehicleClone.size = getSize();
+        //return vehicleClone;
+        return vehicleClone;
     }
 }

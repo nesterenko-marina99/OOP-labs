@@ -26,6 +26,17 @@ public class ClassWithStaticMethods {
         for (double price : prices) System.out.println(price);
     }
 
+    public static void printVehicle (Vehicle vehicle)
+    {
+        String[] modelNames = vehicle.getArrayOfNames();
+        double[] prices= vehicle.getArrayOfPrices();
+        System.out.println(vehicle.getManufacturer() + '\'');
+        for (int i = 0; i < vehicle.getSize(); i++)
+        {
+            System.out.println(modelNames[i] + ' ' + prices[i] + '\'');
+        }
+    }
+
     //метод записи информации о транспортном средстве в байтовый поток
     public static void writingVehicleInfToByteStream(Vehicle vehicle, OutputStream out) {
         String[] modelNames = vehicle.getArrayOfNames();

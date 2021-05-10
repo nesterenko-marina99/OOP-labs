@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Motorcycle implements Vehicle, Serializable {
+public class Motorcycle implements Vehicle, Serializable, Cloneable {
     //поле типа String, хранящее марку мотоцикла
     private String manufacturer;
     private Model head;
@@ -65,7 +65,7 @@ public class Motorcycle implements Vehicle, Serializable {
 
     //внутренний класс Модель, имеющий поля название модели и её цену,
     // а также конструктор
-    private class Model implements Serializable {
+    private class Model implements Serializable, Cloneable {
         private String modelName;
         private double modelPrice;
         private Model prev;
@@ -90,6 +90,11 @@ public class Motorcycle implements Vehicle, Serializable {
             this.modelPrice = modelPrice;
             this.prev = prev;
             this.next = next;
+        }
+
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
         }
     }
 
@@ -238,5 +243,16 @@ public class Motorcycle implements Vehicle, Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(manufacturer, head, size);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Motorcycle vehicleClone = null;
+        vehicleClone = (Motorcycle) super.clone();
+        vehicleClone.head = (Model) head.clone();
+        vehicleClone.manufacturer = getManufacturer();
+        vehicleClone.size = getSize();
+        //return vehicleClone;
+        return vehicleClone;
     }
 }
