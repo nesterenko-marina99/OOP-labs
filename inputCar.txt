@@ -1,0 +1,8 @@
+Lada , 7
+Granta седан , 504900.0
+Granta лифтбек , 526900.0
+Granta хэтчбек , 550500.0
+Granta универсал , 533900.0
+Granta Cross , 625900.0
+Granta учебная , 547900.0
+Granta Drive Active , 694900.0

@@ -242,7 +242,9 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     protected Object clone() throws CloneNotSupportedException {
         Motorcycle vehicleClone = null;
         vehicleClone = (Motorcycle) super.clone();
-        vehicleClone.head = (Model) head.clone();
+ //       vehicleClone.head
+        Model hhead = (Model) head.clone();
+        vehicleClone.head = hhead;
         vehicleClone.manufacturer = getManufacturer();
         vehicleClone.size = getSize();
         //return vehicleClone;

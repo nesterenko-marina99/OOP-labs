@@ -11,7 +11,7 @@ public class Main {
             NoSuchModelNameException, IOException, ClassNotFoundException {
 
 
-       // write your code here
+       // task 1
         Motorcycle yamaha = new Motorcycle("Yamaha");
         //yamaha.addModel();
         yamaha.addModel("YZF-R1", 1705000);
@@ -25,29 +25,56 @@ public class Main {
         yamaha.addModel("MT-03", 473000);
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
-        //проверка на выбрасывание исключений
-        //yamaha.modifyName("MT-09", "XSR900");
-        //yamaha.modifyName("YZ450F", "WR250F");
 
-        IOStaticMethods.writeVehicle(yamaha, new FileWriter
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt"));
-        IOStaticMethods.writeVehicle(
-                IOStaticMethods.readMotorcycle(new FileReader
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/input.txt")),
-                new FileWriter
-                        ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output.txt"));
-        FileOutputStream fileOut = new FileOutputStream
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output");
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(yamaha);
-        FileInputStream fileIn = new FileInputStream
-                ("/home/nesterenkom/Yandex.Disk/university/OOP/Nesterenko_6395_OOP/lab_3/output");
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Motorcycle yamaha_2= (Motorcycle) in.readObject();
-        //ClassWithStaticMethods.printModelNames(yamaha_2);
-        /*yamaha.modifyName("YZF-R3", "YZF-R4");
-        yamaha.removeModel("YZF-R6");
-        System.out.println(yamaha.getPriceByName("MT-10"));
-        ClassWithStaticMethods.printModelNames(yamaha);*/
+
+
+        // task 2
+        Motorcycle yamaha2 = new Motorcycle("Yamaha");
+        //yamaha.addModel();
+        yamaha2.addModel("YZF-R1", 1705000);
+        yamaha2.addModel("YZF-R6", 1153000);
+        yamaha2.addModel("YZF-R3", 499000);
+        yamaha2.addModel("MT-10 SP", 1523000);
+        yamaha2.addModel("MT-10", 1338000);
+        yamaha2.addModel("MT-09 SP", 989000);
+        yamaha2.addModel("MT-09", 891000);
+        yamaha2.addModel("MT-07", 757000);
+        yamaha2.addModel("MT-03", 473000);
+        yamaha2.addModel("XSR900", 888000);
+        yamaha2.addModel("WR450F", 818000);
+
+        System.out.println(yamaha);
+
+        //task 4
+        try {
+            Motorcycle yamaha3 = (Motorcycle) yamaha.clone();
+            yamaha3.setManufacturer("Yamaha3");
+            yamaha3.modifyName("MT-09 SP", "Changes to test");
+            System.out.println(yamaha3); // result task 4
+            System.out.println(yamaha); // result task 1
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(yamaha.hashCode()); // result task 3
+        System.out.println(yamaha.equals(yamaha2)); // result task 2
+
+
+
+        Car lada = new Car("Lada", 7);
+        lada.addModel("Granta седан", 504900);
+        lada.addModel("Granta лифтбек", 526900);
+        lada.addModel("Granta хэтчбек", 550500);
+        lada.addModel("Granta универсал", 533900);
+        lada.addModel("Granta Cross", 625900);
+        lada.addModel("Granta учебная", 547900);
+        lada.addModel("Granta Drive Active", 694900);
+
+        System.out.println(lada);
+
+
+
+
+
     }
 }
