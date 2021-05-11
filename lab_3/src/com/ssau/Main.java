@@ -25,17 +25,18 @@ public class Main {
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
 
-        IOStaticMethods.writeVehicle(yamaha, new FileWriter("input.txt"));
+        IOStaticMethods.writeVehicle(yamaha, new FileWriter("inputMotorcycle.txt"));
         IOStaticMethods.writeVehicle(IOStaticMethods.readMotorcycle
-                (new FileReader("input.txt")), new FileWriter("output.txt"));
+                (new FileReader("inputMotorcycle.txt")),
+                new FileWriter("outputMotorcycle.txt"));
         //сериализация
-        FileOutputStream fileOut = new FileOutputStream("output");
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(yamaha);
+        FileOutputStream fileOutMotorcycle = new FileOutputStream("outputMotorcycle");
+        ObjectOutputStream outMotorcycle = new ObjectOutputStream(fileOutMotorcycle);
+        outMotorcycle.writeObject(yamaha);
         //десериализация
-        FileInputStream fileIn = new FileInputStream("output");
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Motorcycle yamaha_2 = (Motorcycle) in.readObject();
+        FileInputStream fileInMotorcycle = new FileInputStream("outputMotorcycle");
+        ObjectInputStream inMotorcycle = new ObjectInputStream(fileInMotorcycle);
+        Motorcycle yamaha_2 = (Motorcycle) inMotorcycle.readObject();
         IOStaticMethods.printVehicle(yamaha_2);
 
         Car lada = new Car("Lada", 7);
@@ -46,5 +47,18 @@ public class Main {
         lada.addModel("Granta Cross", 625900);
         lada.addModel("Granta учебная", 547900);
         lada.addModel("Granta Drive Active", 694900);
+
+        IOStaticMethods.writeVehicle(lada, new FileWriter("inputCar.txt"));
+        IOStaticMethods.writeVehicle(IOStaticMethods.readCar
+                (new FileReader("inputCar.txt")), new FileWriter("outputCar.txt"));
+        //сериализация
+        FileOutputStream fileOutCar = new FileOutputStream("outputCar");
+        ObjectOutputStream outCar = new ObjectOutputStream(fileOutCar);
+        outCar.writeObject(lada);
+        //десериализация
+        FileInputStream fileInCar = new FileInputStream("outputCar");
+        ObjectInputStream inCar = new ObjectInputStream(fileInCar);
+        Car lada_2 = (Car) inCar.readObject();
+        IOStaticMethods.printVehicle(lada_2);
     }
 }

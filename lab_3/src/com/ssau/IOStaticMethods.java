@@ -28,9 +28,9 @@ public class IOStaticMethods {
     public static void printVehicle(Vehicle vehicle) {
         String[] modelNames = vehicle.getArrayOfNames();
         double[] prices = vehicle.getArrayOfPrices();
-        System.out.println(vehicle.getManufacturer() + '\'');
+        System.out.println(vehicle.getManufacturer());
         for (int i = 0; i < vehicle.getSize(); i++) {
-            System.out.println(modelNames[i] + ' ' + prices[i] + '\'');
+            System.out.println(modelNames[i] + ' ' + prices[i]);
         }
     }
 
