@@ -87,7 +87,9 @@ public class Main {
         try {
             Car lada3 = (Car) lada.clone();
             lada3.setManufacturer("Lada3");
-            lada3.
+            lada3.modifyName("Granta хэтчбек", "Granta hatchback");
+            System.out.println(lada3);
+            System.out.println(lada);
         }
         catch (CloneNotSupportedException ex)
         {}

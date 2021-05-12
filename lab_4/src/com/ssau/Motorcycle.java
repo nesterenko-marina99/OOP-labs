@@ -248,10 +248,8 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
         Motorcycle vehicleClone = null;
         vehicleClone = (Motorcycle) super.clone();
         vehicleClone.head = (Model) head.clone();
-        Model pn = (Model) vehicleClone.head.next.clone();
-        pn.prev = vehicleClone.head;
-        vehicleClone.head.next = pn;
-        while (pn.next != head) {
+        Model pn = vehicleClone.head;
+        for (int i = 0; i < getSize(); i++) {
             Model newClone = (Model) pn.next.clone();
             newClone.prev = pn;
             pn.next = newClone;
