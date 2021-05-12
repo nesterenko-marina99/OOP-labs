@@ -66,7 +66,7 @@ public class Car implements Vehicle, Serializable, Cloneable {
 
         @Override
         protected Object clone() throws CloneNotSupportedException {
-            return super.clone();
+            return (Model) super.clone();
         }
     }
 
@@ -232,15 +232,13 @@ public class Car implements Vehicle, Serializable, Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        Car vehicleClone = null;
-        vehicleClone = (Car) super.clone();
-        for (int i = 0; i < getSize(); i++)
-        {
+        Car vehicleClone = (Car) super.clone();
+        vehicleClone.modelsArray = modelsArray.clone();
+        for (int i = 0; i < getSize(); i++) {
             vehicleClone.modelsArray[i] = (Model) modelsArray[i].clone();
         }
         vehicleClone.manufacturer = getManufacturer();
         //vehicleClone.size = getSize();
-        //return vehicleClone;
         return vehicleClone;
     }
 }

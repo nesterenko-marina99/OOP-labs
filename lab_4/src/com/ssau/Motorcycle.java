@@ -245,8 +245,7 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        Motorcycle vehicleClone = null;
-        vehicleClone = (Motorcycle) super.clone();
+        Motorcycle vehicleClone =  (Motorcycle) super.clone();
         vehicleClone.head = (Model) head.clone();
         Model pn = vehicleClone.head;
         for (int i = 0; i < getSize(); i++) {
