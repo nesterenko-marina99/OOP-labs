@@ -194,7 +194,7 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Мотоцикл");
-        sb.append("Производитель: ").append(manufacturer).append("\n");
+        sb.append(" Производитель: ").append(manufacturer).append("\n");
         sb.append("Модельный ряд: ");
         if (isEmptyList()) sb.append("пусто");
         else {
@@ -248,18 +248,17 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
         Motorcycle vehicleClone = null;
         vehicleClone = (Motorcycle) super.clone();
         vehicleClone.head = (Model) head.clone();
-        Model pp = vehicleClone.head.prev;
-        Model pn = vehicleClone.head.next;
-        while (pp != pn) {
-            Model ppNew = (Model) pp.clone();
-            ppNew.next = pp.next;
-            ppNew.prev = pp.prev;
-            //здесь дописать
-            pp = pp.prev;
-            Model pnNew = (Model) pn.clone();
-            pnNew.next = pn.next;
-
+        Model pn = (Model) vehicleClone.head.next.clone();
+        pn.prev = vehicleClone.head;
+        vehicleClone.head.next = pn;
+        while (pn.next != head) {
+            Model newClone = (Model) pn.next.clone();
+            newClone.prev = pn;
+            pn.next = newClone;
+            pn = pn.next;
         }
+        pn.next = vehicleClone.head;
+        vehicleClone.head.prev = pn;
         return vehicleClone;
     }
 }
