@@ -60,6 +60,11 @@ public class Car implements Vehicle, Serializable, Cloneable {
         }
 
         @Override
+        public String toString() {
+            return "Имя модели: " + modelName + "\n" + "Цена модели: " + modelPrice;
+        }
+
+        @Override
         protected Object clone() throws CloneNotSupportedException {
             return super.clone();
         }

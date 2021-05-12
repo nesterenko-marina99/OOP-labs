@@ -26,8 +26,6 @@ public class Main {
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
 
-
-
         // task 2
         Motorcycle yamaha2 = new Motorcycle("Yamaha");
         //yamaha.addModel();
@@ -59,8 +57,6 @@ public class Main {
         System.out.println(yamaha.hashCode()); // result task 3
         System.out.println(yamaha.equals(yamaha2)); // result task 2
 
-
-
         Car lada = new Car("Lada", 7);
         lada.addModel("Granta седан", 504900);
         lada.addModel("Granta лифтбек", 526900);
@@ -71,10 +67,5 @@ public class Main {
         lada.addModel("Granta Drive Active", 694900);
 
         System.out.println(lada);
-
-
-
-
-
     }
 }

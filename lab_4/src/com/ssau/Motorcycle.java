@@ -92,6 +92,11 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
         }
 
         @Override
+        public String toString() {
+            return "Имя модели: " + modelName + "\n" + "Цена модели: " + modelPrice;
+        }
+
+        @Override
         protected Object clone() throws CloneNotSupportedException {
             return super.clone();
         }
@@ -242,12 +247,19 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     protected Object clone() throws CloneNotSupportedException {
         Motorcycle vehicleClone = null;
         vehicleClone = (Motorcycle) super.clone();
- //       vehicleClone.head
-        Model hhead = (Model) head.clone();
-        vehicleClone.head = hhead;
-        vehicleClone.manufacturer = getManufacturer();
-        vehicleClone.size = getSize();
-        //return vehicleClone;
+        vehicleClone.head = (Model) head.clone();
+        Model pp = vehicleClone.head.prev;
+        Model pn = vehicleClone.head.next;
+        while (pp != pn) {
+            Model ppNew = (Model) pp.clone();
+            ppNew.next = pp.next;
+            ppNew.prev = pp.prev;
+            //здесь дописать
+            pp = pp.prev;
+            Model pnNew = (Model) pn.clone();
+            pnNew.next = pn.next;
+
+        }
         return vehicleClone;
     }
 }
