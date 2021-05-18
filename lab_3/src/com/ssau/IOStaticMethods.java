@@ -43,11 +43,13 @@ public class IOStaticMethods {
         try (DataOutputStream dos = new DataOutputStream(out)) {
             // записываем значения
             IOStaticMethods.outputString(dos, vehicle.getManufacturer());
-            dos.writeInt(size);
+            dos.write((new Integer(size)).toString().getBytes(StandardCharsets.UTF_8));
+            dos.write("\n".getBytes(StandardCharsets.UTF_8));
             int i = 0;
             while (i < size) {
                 IOStaticMethods.outputString(dos, modelNames[i]);
-                dos.writeDouble(prices[i]);
+                dos.write(new Double(prices[i]).toString().getBytes(StandardCharsets.UTF_8));
+                dos.write("\n".getBytes(StandardCharsets.UTF_8));
                 i++;
             }
         } catch (IOException ex) {
@@ -58,15 +60,46 @@ public class IOStaticMethods {
     private static void outputString(DataOutputStream dos, String message)
             throws IOException {
         byte[] byteMessage = message.getBytes(StandardCharsets.UTF_8);
-        dos.writeInt(byteMessage.length);
+        dos.write(new Integer(byteMessage.length).toString().getBytes(StandardCharsets.UTF_8));
+        dos.write("\n".getBytes(StandardCharsets.UTF_8));
         dos.write(byteMessage, 0, byteMessage.length);
+        dos.write("\n".getBytes(StandardCharsets.UTF_8));
+    }
+
+    private static int inputInt(DataInputStream dis) throws IOException {
+        int result = 0;
+        String token = "";
+        while (true) {
+            byte[] length = new byte[1];
+            if (dis.read(length) == -1)
+                throw new IOException();
+            token = new String(length);
+            if (token.equals("\n"))
+                return result;
+            result = result * 10 + Integer.parseInt(token);
+        }
+    }
+
+    private static double inputDouble(DataInputStream dis) throws IOException {
+        StringBuilder line = new StringBuilder();
+        String token = "";
+        while (true) {
+            byte[] length = new byte[1];
+            if (dis.read(length) == -1)
+                throw new IOException();
+            token = new String(length);
+            if (token.equals("\n"))
+                return Double.parseDouble(line.toString());
+            line.append(token);
+        }
     }
 
     private static String inputString(DataInputStream dis) throws IOException {
-        int messageLength = dis.readInt();
+        int messageLength = inputInt(dis);
         byte[] message = new byte[messageLength];
-        if (dis.read(message, 0, messageLength) == -1)
+        if (dis.read(message) == -1)
             throw new IOException();
+        dis.skipBytes(1);
         return new String(message);
     }
 
@@ -77,11 +110,11 @@ public class IOStaticMethods {
         DataInputStream dis = new DataInputStream(in);
         // записываем значения
         Car car = new Car(IOStaticMethods.inputString(dis),
-                dis.readInt());
+                inputInt(dis));
         int i = 0;
         while (i < car.getSize()) {
             car.addModel(IOStaticMethods.inputString(dis),
-                    dis.readDouble());
+                    inputDouble(dis));
             i++;
         }
         return car;
@@ -93,10 +126,10 @@ public class IOStaticMethods {
             DuplicateModelNameException, NoSuchModelNameException {
         DataInputStream dis = new DataInputStream(in);
         Motorcycle motorcycle = new Motorcycle(IOStaticMethods.inputString(dis));
-        int size = dis.readInt();
+        int size = inputInt(dis);
         int i = 0;
         while (i < size) {
-            motorcycle.addModel(IOStaticMethods.inputString(dis), dis.readDouble());
+            motorcycle.addModel(IOStaticMethods.inputString(dis), inputDouble(dis));
             i++;
         }
         return motorcycle;
