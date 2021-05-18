@@ -51,6 +51,8 @@ public class Main {
         IOStaticMethods.writeVehicle(lada, new FileWriter("inputCar.txt"));
         IOStaticMethods.writeVehicle(IOStaticMethods.readCar
                 (new FileReader("inputCar.txt")), new FileWriter("outputCar.txt"));
+        IOStaticMethods.outputVehicle(lada, System.out);
+        IOStaticMethods.inputCar(System.in);
         //сериализация
         FileOutputStream fileOutCar = new FileOutputStream("outputCar");
         ObjectOutputStream outCar = new ObjectOutputStream(fileOutCar);

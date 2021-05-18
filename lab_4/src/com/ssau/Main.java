@@ -49,10 +49,12 @@ public class Main {
         //task 4
         try {
             Motorcycle yamaha3 = (Motorcycle) yamaha.clone();
+            System.out.println(yamaha3.equals(yamaha));
             yamaha3.setManufacturer("Yamaha3");
             yamaha3.modifyName("MT-09 SP", "Changes to test");
             System.out.println(yamaha3); // result task 4
             System.out.println(yamaha); // result task 1
+            System.out.println(yamaha3.equals(yamaha));
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

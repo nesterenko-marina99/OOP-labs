@@ -16,7 +16,6 @@ public class Car implements Vehicle {
         modelsArray = new Model[sizeArrayModels];
     }
 
-
     //метод для получения марки автомобиля
     public String getManufacturer() {
         return manufacturer;
@@ -37,7 +36,6 @@ public class Car implements Vehicle {
             this.modelName = modelName;
             this.modelPrice = modelPrice;
         }
-
     }
 
     //метод для поиска
@@ -115,7 +113,8 @@ public class Car implements Vehicle {
                 if (i == modelsArray.length) {
                     modelsArray = Arrays.copyOf(modelsArray, modelsArray.length + 1);
                     modelsArray[modelsArray.length - 1] = newModel;
-                } else modelsArray[i] = newModel;
+                }
+                else modelsArray[i] = newModel;
             }
         }
     }
