@@ -20,11 +20,11 @@ public class MyFirstPackage {
         this.numbers[index] = val;
     }
 
-    public double getAverage() {
+    public int getAverage() {
         int sum = 0;
         for (int i : this.numbers)
             sum += i;
-        return sum / (double) this.numbers.length;
+        return sum / this.numbers.length;
     }
 
     public void showAllElements() {
