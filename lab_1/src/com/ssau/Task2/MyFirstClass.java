@@ -1,6 +1,6 @@
 public class MyFirstClass {
 
     public static void main(String[] args) {
-	System.out.println("Савоськина Ангелина");
+        System.out.println(""); //вывод на экран
     }
 }
