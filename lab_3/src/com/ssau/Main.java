@@ -29,6 +29,9 @@ public class Main {
         IOStaticMethods.writeVehicle(IOStaticMethods.readMotorcycle
                 (new FileReader("inputMotorcycle.txt")),
                 new FileWriter("outputMotorcycle.txt"));
+
+        IOStaticMethods.outputVehicle(yamaha, System.out);
+        IOStaticMethods.inputMotorcycle(System.in);
         //сериализация
         FileOutputStream fileOutMotorcycle = new FileOutputStream("outputMotorcycle");
         ObjectOutputStream outMotorcycle = new ObjectOutputStream(fileOutMotorcycle);

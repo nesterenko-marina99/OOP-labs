@@ -24,9 +24,7 @@ public class Motorcycle implements Vehicle {
             DuplicateModelNameException {
         this.manufacturer = manufacturer;
         for (int i = 0; i < size; i++)
-        {
-            addModel("name" + i, i);
-        }
+            addModel(null, 0);
     }
 
     //метод для получения марки мотоцикла
@@ -51,7 +49,7 @@ public class Motorcycle implements Vehicle {
         return head.next == head && head.prev == head;
     }
 
-    private Model findModelByName(String modelName) {
+    private Model findModelByName(String modelName)  {
         if (isEmptyList()) return null;
         else {
             Model pn = head.next;

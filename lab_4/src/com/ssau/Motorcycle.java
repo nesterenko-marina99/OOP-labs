@@ -11,14 +11,24 @@ import java.util.Objects;
 public class Motorcycle implements Vehicle, Serializable, Cloneable {
     //поле типа String, хранящее марку мотоцикла
     private String manufacturer;
-    private Model head;
+    private Model head = new Model();
+
+    {
+        head.next = head;
+        head.prev = head;
+    }
+
     private int size;
 
     public Motorcycle(String Manufacturer) {
         this.manufacturer = Manufacturer;
-        head = new Model();
-        head.next = head;
-        head.prev = head;
+    }
+
+    public Motorcycle(String manufacturer, int size) throws
+            DuplicateModelNameException {
+        this.manufacturer = manufacturer;
+        for (int i = 0; i < size; i++)
+            addModel(null, 0);
     }
 
     public void setSize(int size) {
@@ -47,7 +57,7 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
         return head.next == head && head.prev == head;
     }
 
-    private Model findModelByName(String modelName) throws NoSuchModelNameException {
+    private Model findModelByName(String modelName)  {
         if (isEmptyList()) return null;
         else {
             Model pn = head.next;
@@ -162,7 +172,7 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
 
     //метод добавления названия модели и её цены
     public void addModel(String mcModel, double mcPrice) throws
-            DuplicateModelNameException, NoSuchModelNameException {
+            DuplicateModelNameException {
         if (findModelByName(mcModel) != null) throw new
                 DuplicateModelNameException(mcModel);
         else if (mcPrice < 0) throw new ModelPriceOutOfBoundsException();

@@ -123,7 +123,7 @@ public class IOStaticMethods {
 
     //метод чтения информации о Мотоцикле из байтового потока
     public static Motorcycle inputMotorcycle(InputStream in) throws IOException,
-            DuplicateModelNameException, NoSuchModelNameException {
+            DuplicateModelNameException {
         DataInputStream dis = new DataInputStream(in);
         Motorcycle motorcycle = new Motorcycle(IOStaticMethods.inputString(dis));
         int size = inputInt(dis);
@@ -166,7 +166,7 @@ public class IOStaticMethods {
 
     //метод чтения информации о мотоцикле из символьного потока
     public static Motorcycle readMotorcycle(Reader in) throws IOException,
-            DuplicateModelNameException, NoSuchModelNameException {
+            DuplicateModelNameException {
         BufferedReader reader = new BufferedReader(in);
         String[] line = reader.readLine().split(" , ");
         int size = Integer.parseInt(line[1]);
