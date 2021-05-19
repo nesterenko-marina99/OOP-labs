@@ -95,7 +95,7 @@ public class Motorcycle implements Vehicle {
     }
 
     //метод для модификации значения названия модели
-    public void modifyName(String oldMcModel, String newMcModel) throws
+    public void setName(String oldMcModel, String newMcModel) throws
             NoSuchModelNameException, DuplicateModelNameException {
         if (findModelByName(newMcModel) != null) throw new
                 DuplicateModelNameException(newMcModel);
@@ -128,7 +128,7 @@ public class Motorcycle implements Vehicle {
     }
 
     //метод для модификации значения цены модели по её названию
-    public void modifyPriceByName(String mcModel, double mcPrice) throws
+    public void setPriceByName(String mcModel, double mcPrice) throws
             NoSuchModelNameException {
         if (mcPrice < 0) throw new ModelPriceOutOfBoundsException();
         else {
