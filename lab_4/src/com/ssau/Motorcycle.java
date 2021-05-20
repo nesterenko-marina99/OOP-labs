@@ -103,13 +103,15 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
         }
 
         @Override
-        public String toString() {
-            return "Имя модели: " + modelName + "\n" + "Цена модели: " + modelPrice;
+        public String toString() { // метод, который приводит модель в формат строки
+            return "Имя модели: " + modelName + "\n" + "Цена модели: " + modelPrice; // возвращаем имя и цену модели в формате
+            //Имя модели: *******
+            //Цена модели: ****.***
         }
 
         @Override
-        protected Object clone() throws CloneNotSupportedException {
-            return super.clone();
+        protected Object clone() throws CloneNotSupportedException { // метод клонирования модели
+            return super.clone(); // вызывает родительский метод клонирования (метод из класса Object)
         }
     }
 
@@ -203,70 +205,76 @@ public class Motorcycle implements Vehicle, Serializable, Cloneable {
     }
 
     @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Мотоцикл");
-        sb.append(" Производитель: ").append(manufacturer).append("\n");
-        sb.append("Модельный ряд: ");
-        if (isEmptyList()) sb.append("пусто");
+    public String toString() { // метод приведения Мотоцикла к строке
+        final StringBuffer sb = new StringBuffer("Мотоцикл"); // создаем переменную, записываем в нее, что мы говорим про мотоцикл
+        sb.append(" Производитель: ").append(manufacturer).append("\n"); // добавляем производителя и перевод строки
+        sb.append("Модельный ряд: "); // добавляем фразу "Модельный ряд: "
+        if (isEmptyList()) sb.append("пусто"); // если список пуст, добавляем соответствующую пометку
         else {
-            sb.append("\n");
-            Model p = head.next;
-            while (p != head) {
+            sb.append("\n"); // если есть модели, то тогда добавляем перевод строки
+            Model p = head.next; // проходимся по списку, начиная с элемента, следующего за головой
+            while (p != head) { // пока не придем обратно к голове
+                // добавляем в строку название модели и стоимость через пробел, а также перевод строки
                 sb.append(p.modelName).append(" ").append(p.modelPrice).append("\n");
-                p = p.next;
+                p = p.next; // переходим к следующей в списке модели
             }
         }
-        return sb.toString();
+        return sb.toString(); // возвращаем получившуюся строку
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    public boolean equals(Object o) { // метод сравнения текущего объекта с неким иным объектом
+        if (this == o) return true; // если к нам попали 2 абсолютно одинаковых объекта, то сразу возвращаем true
         //if (o == null || getClass() != o.getClass()) return false;
         //Car car = (Car) o;
         //return manufacturer.equals(car.manufacturer) && Arrays.equals(modelsArray, car.modelsArray);
-        if (o instanceof Vehicle) {
-            Vehicle v = (Vehicle) o;
+        if (o instanceof Vehicle) { // если получили на вход Технику
+            Vehicle v = (Vehicle) o; // сохраняем в другую переменную уже типа Техника
             //int curSize = getSize();
-            int comparedSize = v.getSize();
-            if (comparedSize == getSize())
-                if (v.getManufacturer().equals(manufacturer)) {
-                    String[] currentNames = getArrayOfNames();
-                    Arrays.sort(currentNames);
-                    double[] currentPrices = getArrayOfPrices();
-                    Arrays.sort(currentPrices);
-                    String[] comparedNames = v.getArrayOfNames();
-                    Arrays.sort(comparedNames);
-                    double[] comparedPrices = v.getArrayOfPrices();
-                    Arrays.sort(comparedPrices);
-                    int i = 0;
+            int comparedSize = v.getSize(); // получаем количество моделей
+            if (comparedSize == getSize()) // сравниваем количество моделей с текущим объектом
+                if (v.getManufacturer().equals(manufacturer)) { // сравниваем производителей
+                    String[] currentNames = getArrayOfNames(); // сохраняем массив моделей
+                    Arrays.sort(currentNames); // сортируем его (вдруг в полученном объекте те же модели, но в другом порядке)
+                    double[] currentPrices = getArrayOfPrices(); // сохраняем массив цен
+                    Arrays.sort(currentPrices); // сортируем его
+                    String[] comparedNames = v.getArrayOfNames(); // получаем массив имен из сравниваемого объекта
+                    Arrays.sort(comparedNames); // сортируем его
+                    double[] comparedPrices = v.getArrayOfPrices(); // получаем массив цен из сравниваемого объекта
+                    Arrays.sort(comparedPrices); // сортируем его
+                    int i = 0; // переменная счетчик
+                    // пока не дойдем до конца массивов и пока на каждой итерации элементы с одним индексом в
+                    // соответствующих массивах двух объектов совпадают
                     while (i < comparedSize && currentNames[i].equals(comparedNames[i]) &&
                             (Double.compare(currentPrices[i], comparedPrices[i]) == 0))
-                        i++;
-                    return i == comparedSize;
+                        i++; // проходим по массиву
+                    return i == comparedSize; // если дошли до конца массива, значит совпали все элементы
                 }
         }
-        return false;
+        return false; // во всех противных случаях, возвращается false
     }
 
+
+    // функция хэш-кода. Вызывает аналогичную функцию у класса Object, передавая поля объекта как параметры
     @Override
     public int hashCode() {
         return Objects.hash(manufacturer, head, size);
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    protected Object clone() throws CloneNotSupportedException {  // метод, создающий копию объекта
+        // вызываем метод clone у родительского класса (Object) и результат сохраняется в новой переменной
         Motorcycle vehicleClone =  (Motorcycle) super.clone();
-        vehicleClone.head = (Model) head.clone();
-        Model pn = vehicleClone.head;
-        for (int i = 0; i < getSize(); i++) {
-            Model newClone = (Model) pn.next.clone();
-            newClone.prev = pn;
-            pn.next = newClone;
-            pn = pn.next;
+        vehicleClone.head = (Model) head.clone(); // клонируем голову, вызывая метод clone у головы
+        Model pn = vehicleClone.head; // сохраняем голову в отдельной переменной
+        for (int i = 0; i < getSize(); i++) { // проходим по списку
+            Model newClone = (Model) pn.next.clone(); // клонируем следующий элемент
+            newClone.prev = pn; // привязываем текущий элемент
+            pn.next = newClone; // с клоном следующего
+            pn = pn.next; // проходим далее по массиву
         }
-        pn.next = vehicleClone.head;
-        vehicleClone.head.prev = pn;
-        return vehicleClone;
+        pn.next = vehicleClone.head; // последний элемент массива привязываем к новой голове
+        vehicleClone.head.prev = pn; // а новую голову - к последнему элементу
+        return vehicleClone; // возвращаем клонированный объект
     }
 }
