@@ -26,12 +26,12 @@ public class Main {
         //yamaha.modifyName("YZ450F", "WR250F");
         //yamaha.addModel("jdfkj", -34753874);
 
-        yamaha.modifyName("YZF-R3", "YZF-R4");
+        yamaha.setName("YZF-R3", "YZF-R4");
         StaticMethods.printModelNames(yamaha);
         yamaha.removeModel("YZF-R6");
         StaticMethods.printVehicle(yamaha);
         System.out.println("Price MT-10: " + yamaha.getPriceByName("MT-10"));
-        yamaha.modifyPriceByName("MT-10", 1_400_000);
+        yamaha.setPriceByName("MT-10", 1_400_000);
         System.out.println("Modified price MT-10: " + yamaha.getPriceByName("MT-10"));
         StaticMethods.printVehicle(yamaha);
 
@@ -46,9 +46,9 @@ public class Main {
         System.out.println(lada.getManufacturer());
         StaticMethods.printVehicle(lada);
         System.out.println("Price Granta лифтбек: " + lada.getPriceByName("Granta лифтбек"));
-        lada.modifyName("Granta лифтбек", "Granta liftback");
+        lada.setName("Granta лифтбек", "Granta liftback");
         StaticMethods.printModelNames(lada);
-        lada.modifyPriceByName("Granta универсал", 534000);
+        lada.setPriceByName("Granta универсал", 534000);
         StaticMethods.printVehicle(lada);
         lada.removeModel("Granta учебная");
         StaticMethods.printVehicle(lada);
