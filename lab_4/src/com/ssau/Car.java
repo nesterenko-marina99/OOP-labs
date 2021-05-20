@@ -209,37 +209,59 @@ public class Car implements Vehicle, Serializable, Cloneable {
         return sb.toString();
     }
 
-
+    //реализация метода equals - проверка на равенство
     @Override
     public boolean equals(Object o) {
+        //если тот же класс - возвращаем true
         if (this == o) return true;
         //if (o == null || getClass() != o.getClass()) return false;
         //Car car = (Car) o;
         //return manufacturer.equals(car.manufacturer) && Arrays.equals(modelsArray, car.modelsArray);
+        //проверяем, создан ли  данный объект на основе Vehicle
         if (o instanceof Vehicle) {
+            //если да, создаем vehicle и присваиваем ему этот объект
             Vehicle v = (Vehicle) o;
             //int curSize = getSize();
+            //создаем переменную с размерностью данного класса
             int comparedSize = v.getSize();
+            //если размерность совпадает с текущим классом, то
             if (comparedSize == getSize())
+                //проверяем, одинаковый ли производитель
                 if (v.getManufacturer().equals(manufacturer)) {
+                    //создаем массив имен моделей текущего класса
                     String[] currentNames = getArrayOfNames();
+                    //сортируем его
                     Arrays.sort(currentNames);
+                    //создаем массив цен моделей текущего класса
                     double[] currentPrices = getArrayOfPrices();
+                    //сортируем его
                     Arrays.sort(currentPrices);
+                    //создаем массив имен моделей данного класса
                     String[] comparedNames = v.getArrayOfNames();
+                    //сортируем его
                     Arrays.sort(comparedNames);
+                    //создаем массив цен моделей текущего класса
                     double[] comparedPrices = v.getArrayOfPrices();
+                    //сортируем его
                     Arrays.sort(comparedPrices);
+                    //создаем счётчик цикла
                     int i = 0;
+                    //до тех пор, пока счётчик меньше размерности, имя модели в массиве имен
+                    //текущего класса совпадает с именем в данном классе и цена модели в
+                    //массиве цен текущего класса равна цене в массиве цен
                     while (i < comparedSize && currentNames[i].equals(comparedNames[i]) &&
                             (Double.compare(currentPrices[i], comparedPrices[i]) == 0))
+                        //увеличиваем счётчик
                         i++;
+                    //возвращаем, дошёл ли счётчик до конца. если да, то все равно, true
                     return i == comparedSize;
                 }
         }
+        //в любых других случаях возвращаем ложь
         return false;
     }
 
+    //реализация метода hashcode
     @Override
     public int hashCode() {
         int result = Objects.hash(manufacturer);
@@ -247,15 +269,21 @@ public class Car implements Vehicle, Serializable, Cloneable {
         return result;
     }
 
+    //реализация метода clone. глубокое клонирование
     @Override
     protected Object clone() throws CloneNotSupportedException {
+        //создаем клон объекта целиком
         Car vehicleClone = (Car) super.clone();
+        //клонируем массив
         vehicleClone.modelsArray = modelsArray.clone();
         for (int i = 0; i < getSize(); i++) {
+            //клонируем каждый элемент отдельно
             vehicleClone.modelsArray[i] = (Model) modelsArray[i].clone();
         }
+        //присваиваем клону название производителя
         vehicleClone.manufacturer = getManufacturer();
         //vehicleClone.size = getSize();
+        //возвращаем независимый клон объекта
         return vehicleClone;
     }
 }
