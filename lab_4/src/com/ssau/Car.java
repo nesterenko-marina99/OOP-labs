@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+//добавилась реализация интерфейса Cloneable
 public class Car implements Vehicle, Serializable, Cloneable {
     //поле типа String, хранящее марку автомобиля
     private String manufacturer;
@@ -59,13 +60,17 @@ public class Car implements Vehicle, Serializable, Cloneable {
             this.modelPrice = modelPrice;
         }
 
+        //реализация метода toString
         @Override
         public String toString() {
+            //возвращаем заданную строку
             return "Имя модели: " + modelName + "\n" + "Цена модели: " + modelPrice;
         }
 
+        //реализация метод clone
         @Override
         protected Object clone() throws CloneNotSupportedException {
+            //возвращает копию объекта
             return (Model) super.clone();
         }
     }
@@ -175,23 +180,35 @@ public class Car implements Vehicle, Serializable, Cloneable {
         }
     }
 
+    //реализация метода toString
     @Override
     public String toString() {
+        //создаем string buffer - похож на String, но может быть изменен
         final StringBuffer sb = new StringBuffer("Автомобиль");
+        //добавляем в string buffer производителя и подписи c помощью append
         sb.append(" Производитель: ").append(manufacturer).append("\n");
         sb.append("Модельный ряд: ");
+        //если ссылка на массив пуста, товыводим информацию об этом
         if (modelsArray == null) sb.append("пусто");
+        //иначе
         else {
+            //перевод строки
             sb.append("\n");
+            //счётчик цикла
             int i = 0;
+            //пока не дойдем до конца массива или до элемента, определяемого null
             while (i < this.getSize() && modelsArray[i] != null) {
+                //добавляем в string buffer имя и цену каждой модели
                 sb.append(modelsArray[i].modelName).append(" ").
                         append(modelsArray[i].modelPrice).append("\n");
+                //увеличиваем счётчик цикла
                 i++;
             }
         }
+        //возвращаем полученный stringbuffer, преобразованный к String
         return sb.toString();
     }
+
 
     @Override
     public boolean equals(Object o) {

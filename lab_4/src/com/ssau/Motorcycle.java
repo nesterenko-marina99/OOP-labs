@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+//добавилась реализация интерфейса Cloneable
 public class Motorcycle implements Vehicle, Serializable, Cloneable {
     //поле типа String, хранящее марку мотоцикла
     private String manufacturer;
