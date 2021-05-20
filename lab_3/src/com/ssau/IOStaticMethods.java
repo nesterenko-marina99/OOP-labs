@@ -6,101 +6,111 @@ import com.ssau.exceptions.NoSuchModelNameException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+// класс со статическими методами
 public class IOStaticMethods {
+    // метод, позволяющий найти среднюю стоимость моделей
     public static double averageOFModelPrices(Vehicle vehicle) {
-        double[] prices = vehicle.getArrayOfPrices();
-        double number = vehicle.getSize();
-        double sum = 0;
-        for (double price : prices) sum += price;
-        return sum / number;
+        double[] prices = vehicle.getArrayOfPrices(); // создается массив из цен моделей
+        double number = vehicle.getSize(); // узнается его длинна
+        double sum = 0; // переменная под сумму цен моделей
+        for (double price : prices) sum += price; // суммируем цены моделей
+        return sum / number; // возвращаем сумму / количество (среднее)
     }
 
+    // метод, который выводит на экран названия моделей
     public static void printModelNames(Vehicle vehicle) {
-        String[] modelNames = vehicle.getArrayOfNames();
-        for (String name : modelNames) System.out.println(name);
+        String[] modelNames = vehicle.getArrayOfNames(); // создаем массив из имен моделей
+        for (String name : modelNames) System.out.println(name); // выводим каждый элемент этого массива в System.out
     }
 
+    // метод, который выводит на экран цены моделей
     public static void printModelPrices(Vehicle vehicle) {
-        double[] prices = vehicle.getArrayOfPrices();
-        for (double price : prices) System.out.println(price);
+        double[] prices = vehicle.getArrayOfPrices(); // создаем массив цен моделей
+        for (double price : prices) System.out.println(price); // выводим каждый элемент в System.out
     }
 
+    // метод, позволяющий вывести технику на экран
     public static void printVehicle(Vehicle vehicle) {
-        String[] modelNames = vehicle.getArrayOfNames();
-        double[] prices = vehicle.getArrayOfPrices();
-        System.out.println(vehicle.getManufacturer());
-        for (int i = 0; i < vehicle.getSize(); i++) {
-            System.out.println(modelNames[i] + ' ' + prices[i]);
+        String[] modelNames = vehicle.getArrayOfNames(); // создается массив цен моделей
+        double[] prices = vehicle.getArrayOfPrices(); // создается массив имен моделей
+        System.out.println(vehicle.getManufacturer()); // выводим на экран название производителя
+        for (int i = 0; i < vehicle.getSize(); i++) { //продвигаемся по массивам (они оба длинной совпадают с количеством моделей)
+            System.out.println(modelNames[i] + ' ' + prices[i]); // выводим информацию о модели на экран
         }
     }
 
     //метод записи информации о транспортном средстве в байтовый поток
     public static void outputVehicle(Vehicle vehicle, OutputStream out) {
-        String[] modelNames = vehicle.getArrayOfNames();
-        double[] prices = vehicle.getArrayOfPrices();
-        int size = vehicle.getSize();
+        String[] modelNames = vehicle.getArrayOfNames(); // создается массив из названий моделей
+        double[] prices = vehicle.getArrayOfPrices(); // создается массив из цен моделей
+        int size = vehicle.getSize(); // переменная в которой хранится длинна массивов
         //конструкция try-with-resources
         try (DataOutputStream dos = new DataOutputStream(out)) {
             // записываем значения
-            IOStaticMethods.outputString(dos, vehicle.getManufacturer());
-            dos.write((new Integer(size)).toString().getBytes(StandardCharsets.UTF_8));
-            dos.write("\n".getBytes(StandardCharsets.UTF_8));
-            int i = 0;
-            while (i < size) {
-                IOStaticMethods.outputString(dos, modelNames[i]);
-                dos.write(new Double(prices[i]).toString().getBytes(StandardCharsets.UTF_8));
-                dos.write("\n".getBytes(StandardCharsets.UTF_8));
-                i++;
+            IOStaticMethods.outputString(dos, vehicle.getManufacturer()); // записываем название производителя
+            dos.write((new Integer(size)).toString().getBytes(StandardCharsets.UTF_8)); // записываем количество моделей
+            dos.write("\n".getBytes(StandardCharsets.UTF_8)); // записываем перевод строки
+            int i = 0; // переменная счетчик
+            while (i < size) { // проходим по массиву
+                IOStaticMethods.outputString(dos, modelNames[i]); // выводим название модели
+                dos.write(Double.toString(prices[i]).getBytes(StandardCharsets.UTF_8)); // выводим цену модели
+                dos.write("\n".getBytes(StandardCharsets.UTF_8)); // перевод строки
+                i++; // прохождение по массиву
             }
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ex.getMessage()); // если try-catch поймал ошибку, выводим ее сообщение на экран
         }
     }
 
+    // вспомогательный метод для вывода строки в байтовый поток
     private static void outputString(DataOutputStream dos, String message)
             throws IOException {
-        byte[] byteMessage = message.getBytes(StandardCharsets.UTF_8);
-        dos.write(new Integer(byteMessage.length).toString().getBytes(StandardCharsets.UTF_8));
-        dos.write("\n".getBytes(StandardCharsets.UTF_8));
-        dos.write(byteMessage, 0, byteMessage.length);
-        dos.write("\n".getBytes(StandardCharsets.UTF_8));
+        byte[] byteMessage = message.getBytes(StandardCharsets.UTF_8); // переводим сообщение в массив байтов
+        dos.write(Integer.toString(byteMessage.length).getBytes(StandardCharsets.UTF_8)); // записываем длинну сообщения
+        dos.write("\n".getBytes(StandardCharsets.UTF_8)); // перевод строки
+        dos.write(byteMessage, 0, byteMessage.length); // записываем само сообщение
+        dos.write("\n".getBytes(StandardCharsets.UTF_8)); // перевод строки
     }
 
+    // вспомогательный метод для чтения числа из байтового потока
     private static int inputInt(DataInputStream dis) throws IOException {
-        int result = 0;
-        String token = "";
-        while (true) {
-            byte[] length = new byte[1];
-            if (dis.read(length) == -1)
-                throw new IOException();
-            token = new String(length);
-            if (token.equals("\n"))
-                return result;
-            result = result * 10 + Integer.parseInt(token);
+        int result = 0; // переменная для результата
+        String token = ""; // вспомогательная переменная для ввода данных
+        while (true) { // бесконечный цикл
+            byte[] length = new byte[1]; // создаем массив длинной 1
+            if (dis.read(length) == -1) // если не удалось считать 1 символ
+                throw new IOException(); // выбрасываем исключение
+            token = new String(length); // если удалось, то записываем его в token
+            if (token.equals("\n")) // Если token это перевод строки (т.е. ввод числа окончен)
+                return result; // возвращаем число (выход из бесконечного цикла)
+            result = result * 10 + Integer.parseInt(token); // иначе мы дописываем цифру в конец числа
         }
     }
 
+    // вспомогательный метод для чтения числа с точкой из байтового потока
     private static double inputDouble(DataInputStream dis) throws IOException {
-        StringBuilder line = new StringBuilder();
-        String token = "";
-        while (true) {
-            byte[] length = new byte[1];
-            if (dis.read(length) == -1)
-                throw new IOException();
-            token = new String(length);
-            if (token.equals("\n"))
-                return Double.parseDouble(line.toString());
-            line.append(token);
+        StringBuilder line = new StringBuilder(); // переменная для записи результата
+        String token = ""; // вспомогательная переменная для ввода данных
+        while (true) { // бесконечный цикл
+            byte[] length = new byte[1]; // создаем массив байт длинной 1
+            if (dis.read(length) == -1) // если не удалось считать символ
+                throw new IOException(); // выбрасываем исключение
+            token = new String(length); // если удалось, записываем его в token
+            if (token.equals("\n")) // если token это перевод строки (т.е. окончание ввода)
+                return Double.parseDouble(line.toString()); // возвращаем число
+            // (т.к. line по факту результат конкатенации строк, его нужно перевести в формат числа с плавающей точкой)
+            line.append(token); // если не перевод строки, дописываем в конец символ
         }
     }
 
+    // вспомогательный метод для чтения строк из байтового потока данных
     private static String inputString(DataInputStream dis) throws IOException {
-        int messageLength = inputInt(dis);
-        byte[] message = new byte[messageLength];
-        if (dis.read(message) == -1)
-            throw new IOException();
-        dis.skipBytes(1);
-        return new String(message);
+        int messageLength = inputInt(dis); // считываем число (длинну строки)
+        byte[] message = new byte[messageLength]; // создаем массив байтов этой длинны
+        if (dis.read(message) == -1) // если не удалось считать сообщение
+            throw new IOException(); // выбрасываем исключение
+        dis.skipBytes(1); // пропускаем 1 байт (перевод строки)
+        return new String(message); // возвращаем строковый эквивалент считанного сообщения
     }
 
     //метод чтения информации о автомобиле из байтового потока
@@ -111,13 +121,13 @@ public class IOStaticMethods {
         // записываем значения
         Car car = new Car(IOStaticMethods.inputString(dis),
                 inputInt(dis));
-        int i = 0;
-        while (i < car.getSize()) {
-            car.addModel(IOStaticMethods.inputString(dis),
+        int i = 0; // переменная счетчик для массива
+        while (i < car.getSize()) { // пока не выполним следующий код столько раз, сколько моделей
+            car.addModel(IOStaticMethods.inputString(dis), // добавляем новую модель (название и цену считываем из потока ввода)
                     inputDouble(dis));
-            i++;
+            i++; // продвигаемся далее
         }
-        return car;
+        return car; // возвращаем car со всеми данными
 
     }
 
@@ -125,58 +135,60 @@ public class IOStaticMethods {
     public static Motorcycle inputMotorcycle(InputStream in) throws IOException,
             DuplicateModelNameException {
         DataInputStream dis = new DataInputStream(in);
+        // создаем сам Мотоцикл со считанным из потока именем
         Motorcycle motorcycle = new Motorcycle(IOStaticMethods.inputString(dis));
-        int size = inputInt(dis);
-        int i = 0;
-        while (i < size) {
+        int size = inputInt(dis); // считываем из потока количество моделей
+        int i = 0; // переменная счетчик
+        while (i < size) { // пока не достигнем нужного нам количества моделей
+            // добавляем новую модель. Данные о ней (название, цена) считываются из байтового потока
             motorcycle.addModel(IOStaticMethods.inputString(dis), inputDouble(dis));
-            i++;
+            i++; // проходим далее
         }
-        return motorcycle;
+        return motorcycle; // возвращаем созданный мотоцикл со всеми данными
     }
 
     //метод записи информации о транспортном средстве в символьный поток
     public static void writeVehicle(Vehicle vehicle, Writer out) {
-        PrintWriter pwout = new PrintWriter(out);
-        int size = vehicle.getSize();
-        String[] modelNames = vehicle.getArrayOfNames();
-        double[] prices = vehicle.getArrayOfPrices();
-        pwout.println(vehicle.getManufacturer() + " , " + size);
-        for (int i = 0; i < size; ++i)
-            pwout.println(modelNames[i] + " , " + prices[i]);
-        if (pwout.checkError())
-            System.err.println("Error detected");
-        pwout.close();
+        PrintWriter pwout = new PrintWriter(out); // создаем PrintWriter
+        int size = vehicle.getSize(); // получаем информацию о количестве моделей
+        String[] modelNames = vehicle.getArrayOfNames(); // создаем массив названий моделей
+        double[] prices = vehicle.getArrayOfPrices(); // создаем массив цен моделей
+        pwout.println(vehicle.getManufacturer() + " , " + size); // печатаем информацию о производителе и количестве моделей
+        for (int i = 0; i < size; ++i) // проходим по массиву
+            pwout.println(modelNames[i] + " , " + prices[i]); // выводим информацию о модели (название и цена)
+        if (pwout.checkError()) // проверяем на наличие ошибок при выводе
+            System.err.println("Error detected"); // если нашли, то выводим в поток для ошибок, что была найдена ошибка
+        pwout.close(); // закрываем поток
     }
 
     //метод чтения информации о автомобиле из символьного потока
     public static Car readCar(Reader in) throws IOException,
             DuplicateModelNameException {
         BufferedReader reader = new BufferedReader(in);
-        String[] line = reader.readLine().split(" , ");
-        int size = Integer.parseInt(line[1]);
-        Car car = new Car(line[0], size);
-        for (int i = 0; i < size; i++) {
-            line = reader.readLine().split(" , ");
-            car.addModel(line[0], Double.parseDouble(line[1]));
+        String[] line = reader.readLine().split(" , "); // считываем строку и разделяем ее по запятой
+        int size = Integer.parseInt(line[1]); // в конце строчки было записано количество моделей
+        Car car = new Car(line[0], size); // создаем Машину по данным в начале (названию производителя) и количеству моделей
+        for (int i = 0; i < size; i++) { // выполняем *количество моделей* раз
+            line = reader.readLine().split(" , "); // считываем строку и разделяем ее по запятой
+            car.addModel(line[0], Double.parseDouble(line[1])); // добавляем модель на основе считанных данных (название , цена)
         }
-        reader.close();
-        return car;
+        reader.close(); // закрываем поток
+        return car; // возвращаем Машину
     }
 
     //метод чтения информации о мотоцикле из символьного потока
     public static Motorcycle readMotorcycle(Reader in) throws IOException,
             DuplicateModelNameException {
         BufferedReader reader = new BufferedReader(in);
-        String[] line = reader.readLine().split(" , ");
-        int size = Integer.parseInt(line[1]);
-        Motorcycle motorcycle = new Motorcycle(line[0]);
-        for (int i = 0; i < size; i++) {
-            line = reader.readLine().split(" , ");
-            motorcycle.addModel(line[0], Double.parseDouble(line[1]));
+        String[] line = reader.readLine().split(" , ");// считываем строку и разделяем ее по запятой
+        int size = Integer.parseInt(line[1]);// в конце строчки было записано количество моделей
+        Motorcycle motorcycle = new Motorcycle(line[0]);// создаем Мотоцикл по данным в начале (названию производителя)
+        for (int i = 0; i < size; i++) {// выполняем *количество моделей* раз
+            line = reader.readLine().split(" , ");// считываем строку и разделяем ее по запятой
+            motorcycle.addModel(line[0], Double.parseDouble(line[1]));// добавляем модель на основе считанных данных (название , цена)
         }
-        reader.close();
-        return motorcycle;
+        reader.close();// закрываем поток
+        return motorcycle;// возвращаем Машину
     }
 
 }

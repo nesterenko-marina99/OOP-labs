@@ -11,8 +11,8 @@ public class Main {
             NoSuchModelNameException, IOException, ClassNotFoundException {
 
 
-        // write your code here
-        Motorcycle yamaha = new Motorcycle("Yamaha");
+        Motorcycle yamaha = new Motorcycle("Yamaha"); // создаем Мотоцикл
+        // добавляем в него несколько моделей
         yamaha.addModel("YZF-R1", 1705000);
         yamaha.addModel("YZF-R6", 1153000);
         yamaha.addModel("YZF-R3", 499000);
@@ -25,13 +25,14 @@ public class Main {
         yamaha.addModel("XSR900", 888000);
         yamaha.addModel("WR450F", 818000);
 
-        IOStaticMethods.writeVehicle(yamaha, new FileWriter("inputMotorcycle.txt"));
-        IOStaticMethods.writeVehicle(IOStaticMethods.readMotorcycle
-                (new FileReader("inputMotorcycle.txt")),
-                new FileWriter("outputMotorcycle.txt"));
 
-        IOStaticMethods.outputVehicle(yamaha, System.out);
-        IOStaticMethods.inputMotorcycle(System.in);
+        IOStaticMethods.writeVehicle(yamaha, new FileWriter("inputMotorcycle.txt")); // записываем в файл
+        IOStaticMethods.writeVehicle(IOStaticMethods.readMotorcycle
+                        (new FileReader("inputMotorcycle.txt")),
+                new FileWriter("outputMotorcycle.txt")); // записываем в другой файл тот Мотоцикл
+        // , что мы считали в первом файле
+
+
         //сериализация
         FileOutputStream fileOutMotorcycle = new FileOutputStream("outputMotorcycle");
         ObjectOutputStream outMotorcycle = new ObjectOutputStream(fileOutMotorcycle);
@@ -42,7 +43,8 @@ public class Main {
         Motorcycle yamaha_2 = (Motorcycle) inMotorcycle.readObject();
         IOStaticMethods.printVehicle(yamaha_2);
 
-        Car lada = new Car("Lada", 7);
+        Car lada = new Car("Lada", 7); // создаем Машину
+        // добавляем в нее несколько моделей
         lada.addModel("Granta седан", 504900);
         lada.addModel("Granta лифтбек", 526900);
         lada.addModel("Granta хэтчбек", 550500);
@@ -51,14 +53,10 @@ public class Main {
         lada.addModel("Granta учебная", 547900);
         lada.addModel("Granta Drive Active", 694900);
 
-        IOStaticMethods.writeVehicle(lada, new FileWriter("inputCar.txt"));
-        IOStaticMethods.writeVehicle(IOStaticMethods.readCar
+        IOStaticMethods.writeVehicle(lada, new FileWriter("inputCar.txt")); // записываем в файл
+        IOStaticMethods.writeVehicle(IOStaticMethods.readCar // записываем в другой файл ту Машину, что считаем в первом
                 (new FileReader("inputCar.txt")), new FileWriter("outputCar.txt"));
-        //IOStaticMethods.writeVehicle(lada, new PrintWriter(System.out));
-        //IOStaticMethods.readCar( new InputStreamReader(System.in));
 
-        IOStaticMethods.outputVehicle(lada, System.out);
-        IOStaticMethods.inputCar(System.in);
         //сериализация
         FileOutputStream fileOutCar = new FileOutputStream("outputCar");
         ObjectOutputStream outCar = new ObjectOutputStream(fileOutCar);
@@ -68,5 +66,10 @@ public class Main {
         ObjectInputStream inCar = new ObjectInputStream(fileInCar);
         Car lada_2 = (Car) inCar.readObject();
         IOStaticMethods.printVehicle(lada_2);
+        // ввод и вывод в байтовые потоки
+        IOStaticMethods.outputVehicle(yamaha, System.out);
+        IOStaticMethods.inputMotorcycle(System.in);
+        //IOStaticMethods.outputVehicle(lada, System.out);
+        //IOStaticMethods.inputCar(System.in);
     }
 }
