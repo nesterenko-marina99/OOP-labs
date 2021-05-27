@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws DuplicateModelNameException,
             NoSuchModelNameException {
         // write your code here
-        Motorcycle yamaha = new Motorcycle("Yamaha", 1);
+        Motorcycle yamaha = new Motorcycle("Yamaha");
         //yamaha.addModel();
         yamaha.addModel("YZF-R1", 1705000);
         yamaha.addModel("YZF-R6", 1153000);

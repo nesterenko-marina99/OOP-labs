@@ -49,7 +49,7 @@ public class Motorcycle implements Vehicle {
         return head.next == head && head.prev == head;
     }
 
-    private Model findModelByName(String modelName)  {
+    private Model findModelByName(String modelName) {
         if (isEmptyList()) return null;
         else {
             Model pn = head.next;
