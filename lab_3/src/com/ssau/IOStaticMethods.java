@@ -97,7 +97,7 @@ public class IOStaticMethods {
                 }
                 return motorcycle; // возвращаем созданный мотоцикл со всеми данными
             case "class com.ssau.Car":
-                Car car = new Car(readString(dis), Integer.parseInt(readString(dis)));
+                Car car = new Car(readString(dis), dis.readInt());
                 i = 0; // переменная счетчик для массива
                 while (i < car.getSize()) { // пока не выполним следующий код столько раз, сколько моделей
                     car.addModel(readString(dis), dis.readDouble()); // добавляем новую модель
