@@ -58,12 +58,12 @@ public class IOStaticMethods {
         // записываем значения
         writeString(dos, vehicle.getClass().toString());
         writeString(dos, vehicle.getManufacturer());
-        writeString(dos, Integer.toString(size));// записываем количество моделей
+        dos.writeInt(size);// записываем количество моделей
         //dos.write("\n".getBytes(StandardCharsets.UTF_8)); // записываем перевод строки
         int i = 0; // переменная счетчик
         while (i < size) { // проходим по массиву
             writeString(dos, modelNames[i] + " "); // выводим название модели
-            writeString(dos, Double.toString(prices[i])); // выводим цену модели
+            dos.writeDouble(prices[i]); // выводим цену модели
             //dos.write("\n".getBytes(StandardCharsets.UTF_8)); // перевод строки
             i++; // прохождение по массиву
         }
@@ -72,7 +72,7 @@ public class IOStaticMethods {
 
     // вспомогательный метод для чтения строк из байтового потока данных
     private static String readString(DataInputStream dis) throws IOException {
- // считываем число (длину строки)
+        // считываем число (длину строки)
         int messageLength = dis.readInt();
         byte[] message = new byte[messageLength]; // создаем массив байтов этой длинны
         if (dis.read(message) == -1) // если не удалось считать сообщение
@@ -88,11 +88,11 @@ public class IOStaticMethods {
         switch (className) {
             case "class com.ssau.Motorcycle":
                 Motorcycle motorcycle = new Motorcycle(readString(dis));
-                int size = Integer.parseInt(readString(dis)); // считываем из потока количество моделей
+                int size = dis.readInt(); // считываем из потока количество моделей
                 int i = 0; // переменная счетчик
                 while (i < size) { // пока не достигнем нужного нам количества моделей
                     // добавляем новую модель. Данные о ней (название, цена) считываются из байтового потока
-                    motorcycle.addModel(readString(dis), Double.parseDouble(readString(dis)));
+                    motorcycle.addModel(readString(dis), dis.readDouble());
                     i++; // проходим далее
                 }
                 return motorcycle; // возвращаем созданный мотоцикл со всеми данными
@@ -100,7 +100,7 @@ public class IOStaticMethods {
                 Car car = new Car(readString(dis), Integer.parseInt(readString(dis)));
                 i = 0; // переменная счетчик для массива
                 while (i < car.getSize()) { // пока не выполним следующий код столько раз, сколько моделей
-                    car.addModel(readString(dis), Double.parseDouble(readString(dis))); // добавляем новую модель
+                    car.addModel(readString(dis), dis.readDouble()); // добавляем новую модель
                     // (название и цену считываем из потока ввода)
                     i++; // продвигаемся далее
                 }
