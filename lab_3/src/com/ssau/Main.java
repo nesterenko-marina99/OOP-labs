@@ -27,15 +27,18 @@ public class Main {
 
         try {
             // ввод и вывод в байтовые потоки
-            //file
             IOStaticMethods.outputVehicle(yamaha, new FileOutputStream("bytemoto"));
             System.out.println("\nчтение информации о Мотоцикле из FileInputStream");
             IOStaticMethods.printVehicle (IOStaticMethods.inputVehicle (new FileInputStream("bytemoto")));
 
+
             //символьные потоки
+            //file
             IOStaticMethods.writeVehicle(yamaha, new FileWriter("inputMotorcycle.txt")); // записываем в файл
             System.out.println("\nВывод мотоцикла из файла, записанного символьным потоком");
             IOStaticMethods.printVehicle(IOStaticMethods.readVehicle (new FileReader("inputMotorcycle.txt")));
+
+
 
             //сериализация
             FileOutputStream fileOutMotorcycle = new FileOutputStream("outputMotorcycle");
@@ -84,12 +87,18 @@ public class Main {
             Car lada_2 = (Car) inCar.readObject();
             System.out.println("\nДесериализация");
             IOStaticMethods.printVehicle(lada_2);
-            // ввод и вывод в байтовые потоки
-            //system
-            System.out.println("\nзапись информации о мотоцикле в system.out");
-            IOStaticMethods.outputVehicle(yamaha, System.out);
-            /*Motorcycle yamahaTestByteSystem = (Motorcycle) IOStaticMethods.inputVehicle(System.in);
-        IOStaticMethods.printVehicle(yamahaTestByteSystem);*/
+            // ввод и вывод в символьные потоки
+            //system out
+            //System.out.println("\nВывод в System.out");
+            //OutputStreamWriter out = new OutputStreamWriter(System.out);
+            //IOStaticMethods.writeVehicle(yamaha, out);
+            //IOStaticMethods.writeVehicle(lada, out);
+            //system in
+            InputStreamReader in = new InputStreamReader(System.in);
+            //Car carsi = (Car) IOStaticMethods.readVehicle(in);
+            //IOStaticMethods.printVehicle(carsi);
+            Motorcycle moto = (Motorcycle) IOStaticMethods.readVehicle(in);
+            IOStaticMethods.printVehicle(moto);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

@@ -40,14 +40,6 @@ public class IOStaticMethods {
         }
     }
 
-    // вспомогательный метод для вывода строки в байтовый поток
-    private static void writeString(DataOutputStream dos, String message)
-            throws IOException {
-        byte[] byteMessage = message.getBytes(); // переводим сообщение в массив байтов
-        dos.writeInt(byteMessage.length); // записываем длину сообщения
-        dos.write(byteMessage); // записываем само сообщение
-    }
-
     //метод записи информации о транспортном средстве в байтовый поток
     public static void outputVehicle(Vehicle vehicle, OutputStream out) throws
             IOException {
@@ -56,13 +48,13 @@ public class IOStaticMethods {
         int size = vehicle.getSize(); // переменная в которой хранится длина массивов
         DataOutputStream dos = new DataOutputStream(out);
         // записываем значения
-        writeString(dos, vehicle.getClass().toString());
-        writeString(dos, vehicle.getManufacturer());
+        dos.writeUTF(vehicle.getClass().toString());
+        dos.writeUTF(vehicle.getManufacturer());
         dos.writeInt(size);// записываем количество моделей
         //dos.write("\n".getBytes(StandardCharsets.UTF_8)); // записываем перевод строки
         int i = 0; // переменная счетчик
         while (i < size) { // проходим по массиву
-            writeString(dos, modelNames[i] + " "); // выводим название модели
+            dos.writeUTF(modelNames[i] + " "); // выводим название модели
             dos.writeDouble(prices[i]); // выводим цену модели
             //dos.write("\n".getBytes(StandardCharsets.UTF_8)); // перевод строки
             i++; // прохождение по массиву
@@ -70,37 +62,27 @@ public class IOStaticMethods {
         dos.close();
     }
 
-    // вспомогательный метод для чтения строк из байтового потока данных
-    private static String readString(DataInputStream dis) throws IOException {
-        // считываем число (длину строки)
-        int messageLength = dis.readInt();
-        byte[] message = new byte[messageLength]; // создаем массив байтов этой длинны
-        if (dis.read(message) == -1) // если не удалось считать сообщение
-            throw new IOException(); // выбрасываем исключение
-        return new String(message); // возвращаем строковый эквивалент считанного сообщения
-    }
-
     //метод чтения информации о транспортном средстве из байтового потока
     public static Vehicle inputVehicle(InputStream in) throws IOException,
             DuplicateModelNameException {
         DataInputStream dis = new DataInputStream(in);
-        String className = readString(dis);
+        String className = dis.readUTF();
         switch (className) {
             case "class com.ssau.Motorcycle":
-                Motorcycle motorcycle = new Motorcycle(readString(dis));
+                Motorcycle motorcycle = new Motorcycle(dis.readUTF());
                 int size = dis.readInt(); // считываем из потока количество моделей
                 int i = 0; // переменная счетчик
                 while (i < size) { // пока не достигнем нужного нам количества моделей
                     // добавляем новую модель. Данные о ней (название, цена) считываются из байтового потока
-                    motorcycle.addModel(readString(dis), dis.readDouble());
+                    motorcycle.addModel(dis.readUTF(), dis.readDouble());
                     i++; // проходим далее
                 }
                 return motorcycle; // возвращаем созданный мотоцикл со всеми данными
             case "class com.ssau.Car":
-                Car car = new Car(readString(dis), dis.readInt());
+                Car car = new Car(dis.readUTF(), dis.readInt());
                 i = 0; // переменная счетчик для массива
                 while (i < car.getSize()) { // пока не выполним следующий код столько раз, сколько моделей
-                    car.addModel(readString(dis), dis.readDouble()); // добавляем новую модель
+                    car.addModel(dis.readUTF(), dis.readDouble()); // добавляем новую модель
                     // (название и цену считываем из потока ввода)
                     i++; // продвигаемся далее
                 }
